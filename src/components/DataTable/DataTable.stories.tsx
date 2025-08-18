@@ -22,6 +22,11 @@ const data: User[] = [
   { id: 3, name: "Charlie", email: "charlie@mail.com", role: "Manager" },
   { id: 4, name: "Charlie", email: "charlie@mail.com", role: "Manager" },
   { id: 5, name: "Charlie", email: "charlie@mail.com", role: "Manager" },
+  { id: 6, name: "Alice", email: "alice@mail.com", role: "Admin" },
+  { id: 7, name: "Bob", email: "bob@mail.com", role: "User" },
+  { id: 8, name: "Charlie", email: "charlie@mail.com", role: "Manager" },
+  { id: 9, name: "Charlie", email: "charlie@mail.com", role: "Manager" },
+  { id: 10, name: "Charlie", email: "charlie@mail.com", role: "Manager" },
 ];
 
 const meta: Meta<typeof DataTable<User>> = {

@@ -1,9 +1,6 @@
-
-
-
-import  { useState } from "react";
+import { useState } from "react";
 import { Eye, EyeOff, X, Loader2 } from "lucide-react";
-import {clsx} from "clsx";
+import { clsx } from "clsx";
 
 export interface InputFieldProps {
   value?: string;
@@ -53,7 +50,7 @@ export const InputField: React.FC<InputFieldProps> = ({
   return (
     <div className="flex flex-col gap-1 w-full">
       {label && (
-        <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+        <label className="text-sm font-medium text-gray-700 dark:text-gray-500">
           {label}
         </label>
       )}
@@ -78,7 +75,9 @@ export const InputField: React.FC<InputFieldProps> = ({
           <button
             type="button"
             onClick={() =>
-              onChange?.({ target: { value: "" } } as React.ChangeEvent<HTMLInputElement>)
+              onChange?.({
+                target: { value: "" },
+              } as React.ChangeEvent<HTMLInputElement>)
             }
             className="absolute right-2 text-gray-400 hover:text-gray-600"
           >
@@ -92,6 +91,7 @@ export const InputField: React.FC<InputFieldProps> = ({
             type="button"
             onClick={() => setShowPassword((p) => !p)}
             className="absolute right-2 text-gray-400 hover:text-gray-600"
+             aria-label={showPassword ? "Hide password" : "Show password"}
           >
             {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
           </button>
@@ -99,20 +99,19 @@ export const InputField: React.FC<InputFieldProps> = ({
 
         {/* Loading spinner */}
         {loading && (
-          <Loader2 className="absolute right-2 animate-spin text-gray-500" size={16} />
+          <Loader2
+            className="absolute right-2 animate-spin text-gray-500"
+            size={16}
+          />
         )}
       </div>
 
       {/* Helper or Error text */}
       {errorMessage ? (
-        <p className="text-sm text-red-500">{errorMessage}</p>
+        <p className="text-sm text-red-600">{errorMessage}</p>
       ) : helperText ? (
-        <p className="text-sm text-gray-500 dark:text-gray-400">{helperText}</p>
+        <p className="text-sm text-gray-600 dark:text-gray-500">{helperText}</p>
       ) : null}
     </div>
   );
 };
-
-
-
-

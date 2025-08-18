@@ -67,15 +67,15 @@ export function DataTable<T extends { id: string | number }>({
   }
 
   return (
-    <div className="overflow-x-auto rounded-lg border border-gray-200">
+    <div className="overflow-x-auto border border-gray-300 dark:border-gray-600 shadow-md rounded">
       <table className="min-w-full text-sm text-left">
         <thead className="bg-gray-50">
           <tr>
-            {selectable && <th className="p-2"></th>}
+            {selectable && <th className="p-2">select</th>}
             {columns.map((col) => (
               <th
                 key={col.key}
-                className="p-2 font-medium text-gray-700 cursor-pointer select-none"
+                className="p-2 font-medium text-gray-900 cursor-pointer select-none"
                 onClick={() => col.sortable && handleSort(col.dataIndex as string)}
               >
                 {col.title}
@@ -91,8 +91,8 @@ export function DataTable<T extends { id: string | number }>({
             <tr
               key={row.id}
               className={clsx(
-                "border-t hover:bg-gray-50 transition",
-                selected.has(row.id) && "bg-blue-50"
+                "border-t ` hover:bg-gray-100 transition",
+                selected.has(row.id) && "bg-blue-100"
               )}
             >
               {selectable && (
