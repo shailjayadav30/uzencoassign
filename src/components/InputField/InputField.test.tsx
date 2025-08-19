@@ -1,12 +1,12 @@
 
 import { render, screen, fireEvent } from "@testing-library/react";
-import "@testing-library/jest-dom"; // ✅ adds toBeInTheDocument
+import "@testing-library/jest-dom"; 
 import { InputField } from "./InputField"
 
 
 test("renders input with label", () => {
   render(<InputField label="Username" placeholder="Enter username" />);
-  expect(screen.getByLabelText("Username")).toBeInTheDocument(); // ✅ works
+  expect(screen.getByLabelText("Username")).toBeInTheDocument();
 });
 
 test("calls onChange when typing", () => {
@@ -16,5 +16,5 @@ test("calls onChange when typing", () => {
   const input = screen.getByLabelText("Email");
   fireEvent.change(input, { target: { value: "test" } });
 
-  expect(handleChange).toHaveBeenCalled(); // ✅ works
+  expect(handleChange).toHaveBeenCalled(); 
 });

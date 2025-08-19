@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import clsx from "clsx";
 
 export interface Column<T> {
@@ -26,7 +26,7 @@ export function DataTable<T extends { id: string | number }>({
   const [sortKey, setSortKey] = useState<string | null>(null);
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
   const [selected, setSelected] = useState<Set<string | number>>(new Set());
-
+ const selectAllRef = useRef<HTMLInputElement>(null);
   const handleSort = (key: string) => {
     if (sortKey === key) {
       setSortOrder(sortOrder === "asc" ? "desc" : "asc");
@@ -57,6 +57,24 @@ export function DataTable<T extends { id: string | number }>({
     setSelected(newSet);
     onRowSelect?.(data.filter((d) => newSet.has(d.id)));
   };
+ const toggleAll = () => {
+    if (selected.size === data.length) {
+      // unselect all
+      setSelected(new Set());
+      onRowSelect?.([]);
+    } else {
+      // select all
+      const all = new Set(data.map((d) => d.id));
+      setSelected(all);
+      onRowSelect?.(data);
+    }
+  };
+  useEffect(() => {
+    if (selectAllRef.current) {
+      selectAllRef.current.indeterminate =
+        selected.size > 0 && selected.size < data.length;
+    }
+  }, [selected, data]);
 
   if (loading) {
     return <p className="p-4 text-gray-500">Loading data...</p>;
@@ -67,15 +85,21 @@ export function DataTable<T extends { id: string | number }>({
   }
 
   return (
-    <div className="overflow-x-auto border border-gray-300 dark:border-gray-600 shadow-md rounded">
-      <table className="min-w-full text-sm text-left">
+    <div className="overflow-x-auto border border-gray-300  shadow-md rounded mt-14">
+      <table className="min-w-full text-sm text-left border-collapse border border-gray-300  ">
         <thead className="bg-gray-50">
-          <tr>
-            {selectable && <th className="p-2">select</th>}
+          <tr className="bg-gray-200">
+            {selectable && <th className="p-2 border border-gray-300 "> <input
+            ref={selectAllRef}
+                  type="checkbox"
+                  aria-label="Select all rows"
+                  checked={selected.size === data.length && data.length > 0}
+                  onChange={toggleAll}
+                /></th>}
             {columns.map((col) => (
-              <th
+              <th 
                 key={col.key}
-                className="p-2 font-medium text-gray-900 cursor-pointer select-none"
+                className="p-2 font-bold uppercase border border-gray-300   text-gray-900 cursor-pointer select-none "
                 onClick={() => col.sortable && handleSort(col.dataIndex as string)}
               >
                 {col.title}
@@ -86,17 +110,17 @@ export function DataTable<T extends { id: string | number }>({
             ))}
           </tr>
         </thead>
-        <tbody>
+        <tbody >
           {sortedData.map((row) => (
-            <tr
+            <tr 
               key={row.id}
               className={clsx(
                 "border-t ` hover:bg-gray-100 transition",
                 selected.has(row.id) && "bg-blue-100"
               )}
             >
-              {selectable && (
-                <td className="p-2">
+              {selectable && ( 
+                <td className="p-2 border border-gray-300 ">
                   <input
                     type="checkbox"
                     checked={selected.has(row.id)}
@@ -106,7 +130,7 @@ export function DataTable<T extends { id: string | number }>({
                 </td>
               )}
               {columns.map((col) => (
-                <td key={col.key} className="p-2">
+                <td key={col.key} className="p-2 border border-gray-300 ">
                   {String(row[col.dataIndex])}
                 </td>
               ))}
@@ -117,3 +141,4 @@ export function DataTable<T extends { id: string | number }>({
     </div>
   );
 }
+

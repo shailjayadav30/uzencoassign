@@ -1,3 +1,23 @@
+#### Clone the repository
+
+git clone [https://github.com/shailjayadav30/uzencoassign]()
+
+#### Install dependencies
+
+npm   install
+
+### Run Storybook
+
+npm run storybook
+
+#### Run Tests
+
+npm run test
+
+#### Storybook Preview Link :
+
+[https://vercel.com/shailja-yadavs-projects/uzencoassign]()
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.

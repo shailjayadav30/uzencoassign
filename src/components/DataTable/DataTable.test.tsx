@@ -60,7 +60,7 @@ describe("DataTable", () => {
     const ageHeader = screen.getByText("Age");
     fireEvent.click(ageHeader);
 
-    // after sorting ascending: Alice (25) should come before Bob (30)
+   
     const rows = screen.getAllByRole("row");
     expect(rows[1]).toHaveTextContent("Alice");
     expect(rows[2]).toHaveTextContent("Bob");
